@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="创建 network创建一个公用的 network,使得加入此 network 的容器能互相访问 1sudo docker network create --driver bridge common-network  单点部署 mysql安装 mariadb, 使用 utf8mb4 字符集.如果机器够多, 可以考虑主从部署. 12345678910sudo docker run \    --na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker搭建依赖环境">
+<meta property="og:url" content="http://yoursite.com/2020/01/17/docker%E6%90%AD%E5%BB%BA%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="陈高原的个人博客">
+<meta property="og:description" content="创建 network创建一个公用的 network,使得加入此 network 的容器能互相访问 1sudo docker network create --driver bridge common-network  单点部署 mysql安装 mariadb, 使用 utf8mb4 字符集.如果机器够多, 可以考虑主从部署. 12345678910sudo docker run \    --na">
+<meta property="article:published_time" content="2020-01-17T06:19:02.128Z">
+<meta property="article:modified_time" content="2020-01-17T06:40:38.392Z">
+<meta property="article:author" content="陈高原">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/17/docker搭建依赖环境/"/>
+
+
+
+
+
+  <title>docker搭建依赖环境 | 陈高原的个人博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">陈高原的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/docker%E6%90%AD%E5%BB%BA%E4%BE%9D%E8%B5%96%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈高原">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈高原的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker搭建依赖环境</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-17T14:19:02+08:00">
+                2020-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="创建-network"><a href="#创建-network" class="headerlink" title="创建 network"></a>创建 network</h2><p>创建一个公用的 network,使得加入此 network 的容器能互相访问</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker network create --driver bridge common-network</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-mysql"><a href="#单点部署-mysql" class="headerlink" title="单点部署 mysql"></a>单点部署 mysql</h2><p>安装 mariadb, 使用 utf8mb4 字符集.<br>如果机器够多, 可以考虑主从部署.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name mariadb \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e MYSQL_ROOT_PASSWORD=&#123;&#123;MYSQL密码&#125;&#125; \</span><br><span class="line">    -p 3306:3306 \</span><br><span class="line">    -v <span class="variable">$PWD</span>/mysql/conf.d:/etc/mysql/conf.d \</span><br><span class="line">    -v <span class="variable">$PWD</span>/mysql/data:/var/lib/mysql \</span><br><span class="line">    -d mariadb \</span><br><span class="line">    --character-set-server=utf8mb4 \</span><br><span class="line">    --collation-server=utf8mb4_unicode_ci</span><br></pre></td></tr></table></figure>
+
+<p>连接数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker <span class="built_in">exec</span> -it mariadb mysql -hlocalhost -uroot -p&#123;&#123;MYSQL密码&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-nacos"><a href="#单点部署-nacos" class="headerlink" title="单点部署 nacos"></a>单点部署 nacos</h2><p>用 nacos 来做集群中的 注册中心 与 配置中心.<br>如果机器够多可以多节点部署 nacos.</p>
+<p>创建数据库 nacos_config, 使用 sql/nacos.sql 初始化数据库.<br>如果想自定义密码, 使用<a href="https://www.jisuan.mobi/p163u3BN66Hm6JWx.html" target="_blank" rel="noopener">BCrypt Rounds 12</a>计算出密文密码, 并替换表 nacos_config.users 中的值.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name nacos-server \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e PREFER_HOST_MODE=hostname \</span><br><span class="line">    -e MODE=standalone \</span><br><span class="line">    -e SPRING_DATASOURCE_PLATFORM=mysql \</span><br><span class="line">    -e MYSQL_MASTER_SERVICE_HOST=mariadb \</span><br><span class="line">    -e MYSQL_MASTER_SERVICE_PORT=3306 \</span><br><span class="line">    -e MYSQL_MASTER_SERVICE_USER=root \</span><br><span class="line">    -e MYSQL_MASTER_SERVICE_PASSWORD=&#123;&#123;MYSQL密码&#125;&#125; \</span><br><span class="line">    -e MYSQL_MASTER_SERVICE_DB_NAME=nacos_config \</span><br><span class="line">    -e MYSQL_SLAVE_SERVICE_HOST=mariadb \</span><br><span class="line">    -e MYSQL_SLAVE_SERVICE_PORT=3306 \</span><br><span class="line">    -p 8848:8848 \</span><br><span class="line">    -d nacos/nacos-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-nacos-dns"><a href="#单点部署-nacos-dns" class="headerlink" title="单点部署 nacos-dns"></a>单点部署 nacos-dns</h2><p>用 nacos-dns 做 nacos 的 dns 服务发现,<br>使用 SRV 请求可以获得服务的 IP,端口,权值,优先级</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name nacos-dns \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e <span class="string">"NODE_ENV=production"</span> \</span><br><span class="line">    -e <span class="string">"LOG_LEVEL=WARN"</span> \</span><br><span class="line">    -e <span class="string">"NACOS_LIST=nacos-server:8848"</span> \</span><br><span class="line">    -e <span class="string">"NACOS_NAMESPACEID=public"</span> \</span><br><span class="line">    -e <span class="string">"DOM_UPDATE_INTERVAL=5000"</span> \</span><br><span class="line">    -e <span class="string">"CACHE_TTL=5"</span> \</span><br><span class="line">    -p 15353:15353/tcp \</span><br><span class="line">    -p 15353:15353/udp \</span><br><span class="line">    -v <span class="variable">$PWD</span>/nacos-dns/logs:/home/nacos-dns/logs \</span><br><span class="line">    -d quickts/nacos-dns</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-redis"><a href="#单点部署-redis" class="headerlink" title="单点部署 redis"></a>单点部署 redis</h2><p>主要用来存储临时数据, 如今天签到数据, 本周大奖赛数据等<br>使用 aof 方式持久化</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name redis \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -p 6379:6379 \</span><br><span class="line">    -v <span class="variable">$PWD</span>/redis/data:/data \</span><br><span class="line">    -d redis redis-server \</span><br><span class="line">    --appendonly yes \</span><br><span class="line">    --requirepass &#123;&#123;REDIS密码&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-rabbitmq"><a href="#单点部署-rabbitmq" class="headerlink" title="单点部署 rabbitmq"></a>单点部署 rabbitmq</h2><p>使用 rabbitmq 做事件中心</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name rabbitmq \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e RABBITMQ_DEFAULT_USER=root \</span><br><span class="line">    -e RABBITMQ_DEFAULT_PASS=&#123;&#123;RABBITMQ密码&#125;&#125; \</span><br><span class="line">    -p 15672:15672 \</span><br><span class="line">    -p 5672:5672 \</span><br><span class="line">    -d rabbitmq:management</span><br></pre></td></tr></table></figure>
+
+<h2 id="单点部署-kong"><a href="#单点部署-kong" class="headerlink" title="单点部署 kong"></a>单点部署 kong</h2><p>先安装 postgres, kong 与 konga 需要使用 postgres.<br>只能使用 9.6 的数据库.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name postgres \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e <span class="string">"POSTGRES_USER=kong"</span> \</span><br><span class="line">    -e <span class="string">"POSTGRES_DB=kong"</span> \</span><br><span class="line">    -p 5432:5432 \</span><br><span class="line">    -d postgres:9.6</span><br></pre></td></tr></table></figure>
+
+<p>初始化 kong 的数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run --rm \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e <span class="string">"KONG_DATABASE=postgres"</span> \</span><br><span class="line">    -e <span class="string">"KONG_PG_HOST=postgres"</span> \</span><br><span class="line">    kong kong migrations bootstrap</span><br></pre></td></tr></table></figure>
+
+<p>dns 请求是用 udp 发送的, 而 docker 中使用 udp 有些问题, 所以这里使用 host 的网络类型.<br>因为修改了 dns, 所以只能配置 postgres 的 ip.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name kong \</span><br><span class="line">    --network host \</span><br><span class="line">    -e <span class="string">"KONG_DATABASE=postgres"</span> \</span><br><span class="line">    -e <span class="string">"KONG_PG_HOST=127.0.0.1"</span> \</span><br><span class="line">    -e <span class="string">"KONG_PROXY_ACCESS_LOG=/dev/stdout"</span> \</span><br><span class="line">    -e <span class="string">"KONG_ADMIN_ACCESS_LOG=/dev/stdout"</span> \</span><br><span class="line">    -e <span class="string">"KONG_PROXY_ERROR_LOG=/dev/stderr"</span> \</span><br><span class="line">    -e <span class="string">"KONG_ADMIN_ERROR_LOG=/dev/stderr"</span> \</span><br><span class="line">    -e <span class="string">"KONG_PROXY_LISTEN=0.0.0.0:8000, 0.0.0.0:8443 ssl"</span> \</span><br><span class="line">    -e <span class="string">"KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl"</span> \</span><br><span class="line">    -e <span class="string">"KONG_DNS_RESOLVER=127.0.0.1:15353"</span> \</span><br><span class="line">    -v <span class="variable">$PWD</span>/kong/logs:/usr/<span class="built_in">local</span>/kong/logs \</span><br><span class="line">    -v <span class="variable">$PWD</span>/kong/conf:/etc/kong \</span><br><span class="line">    -d kong</span><br></pre></td></tr></table></figure>
+
+<p>如果想使用 80 443 接口, 可以将 80 443 映射到 8000 8443, 重启会失效.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8000</span><br><span class="line">sudo iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443</span><br></pre></td></tr></table></figure>
+
+<p>初始化 konga 的数据库</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --network common-network \</span><br><span class="line">    --rm pantsel/konga -c prepare -a postgres -u postgresql://kong:@postgres:5432/konga</span><br></pre></td></tr></table></figure>
+
+<p>安装 konga, 网页上配置 kong 的地址时, 需配置<a href="http://172.17.0.1:8001" target="_blank" rel="noopener">http://172.17.0.1:8001</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run \</span><br><span class="line">    --name konga \</span><br><span class="line">    --network common-network \</span><br><span class="line">    -e <span class="string">"TOKEN_SECRET=quickts"</span> \</span><br><span class="line">    -e <span class="string">"DB_ADAPTER=postgres"</span> \</span><br><span class="line">    -e <span class="string">"DB_URI=postgresql://kong:@postgres:5432/konga"</span> \</span><br><span class="line">    -e <span class="string">"NODE_ENV=production"</span> \</span><br><span class="line">    -p 1337:1337 \</span><br><span class="line">    -d pantsel/konga</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行程序"><a href="#运行程序" class="headerlink" title="运行程序"></a>运行程序</h3><p>mysql 中创建数据库 quickts, 使用 sql/quickts.sql 初始化<br>拷贝.env_example 到.env, 修改对应参数<br>vscode 中可以直接 f5 调试运行</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">陈高原</p>
+              <p class="site-description motion-element" itemprop="description">今日长缨在手，何时缚住苍龙?</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-network"><span class="nav-number">1.</span> <span class="nav-text">创建 network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-mysql"><span class="nav-number">2.</span> <span class="nav-text">单点部署 mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-nacos"><span class="nav-number">3.</span> <span class="nav-text">单点部署 nacos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-nacos-dns"><span class="nav-number">4.</span> <span class="nav-text">单点部署 nacos-dns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-redis"><span class="nav-number">5.</span> <span class="nav-text">单点部署 redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-rabbitmq"><span class="nav-number">6.</span> <span class="nav-text">单点部署 rabbitmq</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单点部署-kong"><span class="nav-number">7.</span> <span class="nav-text">单点部署 kong</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行程序"><span class="nav-number">7.1.</span> <span class="nav-text">运行程序</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈高原</span>
+
+  
+</div>
+
+<div class="powered-by">
+<a class="theme-link" target="_blank" href="http://www.beian.miit.gov.cn">湘ICP备19021817号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
